@@ -16,7 +16,7 @@ export default function Header() {
             href="/"
             className="text-3xl font-bold"
           >
-            LAAM
+            PoPStore
           </Link>
 
           <nav className="hidden md:flex gap-8">
@@ -35,6 +35,14 @@ export default function Header() {
 
             <Link href="/account">
               Account
+            </Link>
+            
+            <Link href="/login">
+             Login
+            </Link>
+
+            <Link href="/register">
+             Register
             </Link>
 
           </nav>
