@@ -3,8 +3,8 @@ import Header from "@/components/storefront/Header";
 import Footer from "@/components/storefront/Footer";
 
 export const metadata = {
-  title: "LAAM Clone Store",
-  description: "Premium Fashion Marketplace"
+  title: "Product of Pakistan Store",
+  description: "Premium Products of Pakistan"
 };
 
 export default function RootLayout({
