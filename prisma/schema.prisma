@@ -216,18 +216,22 @@ model Product {
 
 model Order {
 
-  id          String   @id @default(cuid())
-
-  total       Float
+  id          String @id @default(cuid())
 
   userId      String
 
-  customer    User @relation(
+  total       Float
+
+  status      OrderStatus @default(PENDING)
+
+  createdAt   DateTime @default(now())
+
+  customer User @relation(
     fields:[userId],
     references:[id]
   )
 
-  createdAt   DateTime @default(now())
+  items OrderItem[]
 }
 
 model ProductImage {
