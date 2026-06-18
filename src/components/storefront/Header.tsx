@@ -45,6 +45,10 @@ export default function Header() {
              Register
             </Link>
 
+            <Link href="/cart">
+             Cart
+            </Link>
+
           </nav>
 
         </div>
