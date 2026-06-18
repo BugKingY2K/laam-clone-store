@@ -1,12 +1,64 @@
-import { auth } from "@/auth";
+type Column = {
+  key: string;
+  label: string;
+};
 
-export async function requireAdmin() {
+type Props = {
+  columns: Column[];
+  rows: Record<string, any>[];
+};
 
-  const session = await auth();
+export default function DataTable({
+  columns,
+  rows
+}: Props) {
 
-  if (!session?.user) {
-    throw new Error("Unauthorized");
-  }
+  return (
 
-  return session;
+    <table className="w-full border">
+
+      <thead>
+
+        <tr>
+
+          {columns.map(col => (
+
+            <th
+              key={col.key}
+              className="border p-3 text-left"
+            >
+              {col.label}
+            </th>
+
+          ))}
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        {rows.map((row,index)=> (
+
+          <tr key={index}>
+
+            {columns.map(col => (
+
+              <td
+                key={col.key}
+                className="border p-3"
+              >
+                {row[col.key]}
+              </td>
+
+            ))}
+
+          </tr>
+
+        ))}
+
+      </tbody>
+
+    </table>
+  );
 }
