@@ -2,6 +2,36 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { prisma } from "./prisma";
 import bcrypt from "bcryptjs";
+import { auth } from "@/auth";
+
+export async function getCurrentUser() {
+
+  const session = await auth();
+
+  return session?.user ?? null;
+}
+
+export async function requireUser() {
+
+  const user = await getCurrentUser();
+
+  if (!user) {
+    throw new Error("Authentication required");
+  }
+
+  return user;
+}
+
+export async function requireAdmin() {
+
+  const user = await requireUser();
+
+  if ((user as any).role !== "ADMIN") {
+    throw new Error("Admin access required");
+  }
+
+  return user;
+}
 
 export const { handlers, auth, signIn, signOut } =
   NextAuth({
