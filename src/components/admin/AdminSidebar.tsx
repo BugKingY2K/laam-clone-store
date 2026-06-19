@@ -2,91 +2,56 @@ import Link from "next/link";
 
 export default function AdminSidebar() {
 
-  const items = [
-
-    {
-      label: "Dashboard",
-      href: "/admin"
-    },
-
-    {
-      label: "Products",
-      href: "/admin/products"
-    },
-
-    {
-      label: "Categories",
-      href: "/admin/categories"
-    },
-
-    {
-      label: "Inventory",
-      href: "/admin/inventory"
-    },
-
-    {
-      label: "Orders",
-      href: "/admin/orders"
-    },
-
-    {
-      label: "Customers",
-      href: "/admin/customers"
-    },
-
-    {
-      label: "Analytics",
-      href: "/admin/analytics"
-    },
-
-    {
-      label: "Media",
-      href: "/admin/media"
-    }
-  ];
-
   return (
 
     <aside
       className="
-      w-64
-      border-r
-      min-h-screen
-      bg-white"
+      w-72
+      bg-white
+      border-r"
     >
 
       <div className="p-6">
 
-        <h2 className="text-2xl font-bold">
-
+        <h2
+          className="
+          text-2xl
+          font-bold"
+        >
           Admin
-
         </h2>
 
       </div>
 
-      <nav>
+      <nav className="space-y-2 p-4">
 
-        {items.map(item => (
+        <Link href="/admin">
+          Dashboard
+        </Link>
 
-          <Link
+        <Link href="/admin/products">
+          Products
+        </Link>
 
-            key={item.href}
+        <Link href="/admin/categories">
+          Categories
+        </Link>
 
-            href={item.href}
+        <Link href="/admin/inventory">
+          Inventory
+        </Link>
 
-            className="
-            block
-            px-6
-            py-3
-            hover:bg-gray-100"
-          >
+        <Link href="/admin/orders">
+          Orders
+        </Link>
 
-            {item.label}
+        <Link href="/admin/customers">
+          Customers
+        </Link>
 
-          </Link>
-
-        ))}
+        <Link href="/admin/analytics">
+          Analytics
+        </Link>
 
       </nav>
 
