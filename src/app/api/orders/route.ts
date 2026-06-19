@@ -1,6 +1,11 @@
 import { prisma }
 from "@/lib/prisma";
 
+import {
+  deductInventory
+}
+from "@/lib/inventory";
+
 export async function POST(
   request: Request
 ) {
@@ -11,7 +16,7 @@ export async function POST(
   const order =
     await prisma.order.create({
 
-      data: {
+      data:{
 
         userId:
           body.userId,
@@ -19,7 +24,7 @@ export async function POST(
         total:
           body.total,
 
-        items: {
+        items:{
 
           create:
             body.items.map(
@@ -32,12 +37,29 @@ export async function POST(
                   item.quantity,
 
                 unitPrice:
-                  item.price
+                  item.unitPrice
               })
             )
         }
+      },
+
+      include:{
+        items:true
       }
     });
+
+  for (
+    const item
+    of body.items
+  ) {
+
+    await deductInventory(
+
+      item.productId,
+
+      item.quantity
+    );
+  }
 
   return Response.json(order);
 }
