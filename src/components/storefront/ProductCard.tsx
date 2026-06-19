@@ -1,45 +1,65 @@
+import Link from "next/link";
+
 type Props = {
 
-  title: string;
+  product: {
 
-  price: number;
+    id: string;
 
-  image: string;
+    name: string;
+
+    slug: string;
+
+    price: number;
+  };
 };
 
 export default function ProductCard({
-
-  title,
-  price,
-  image
-
+  product
 }: Props) {
 
   return (
 
-    <div className="border rounded-xl overflow-hidden">
+    <Link
+      href={`/products/${product.slug}`}
+    >
 
-      <img
-        src={image}
-        alt={title}
-        className="h-80 w-full object-cover"
-      />
+      <div
+        className="
+        border
+        rounded-xl
+        overflow-hidden
+        hover:shadow-lg"
+      >
 
-      <div className="p-4">
+        <div
+          className="
+          h-72
+          bg-gray-100"
+        />
 
-        <h3 className="font-medium">
+        <div className="p-4">
 
-          {title}
+          <h3 className="font-semibold">
 
-        </h3>
+            {product.name}
 
-        <p className="mt-2">
+          </h3>
 
-          PKR {price.toLocaleString()}
-        </p>
+          <p className="mt-2">
+
+            PKR
+
+            {" "}
+
+            {product.price.toLocaleString()}
+
+          </p>
+
+        </div>
 
       </div>
 
-    </div>
+    </Link>
   );
 }
