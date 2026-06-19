@@ -3,7 +3,11 @@
 import { useState }
 from "react";
 
-export default function ProductForm() {
+export default function ProductForm({
+
+  categories
+
+}:any) {
 
   const [name,setName] =
     useState("");
@@ -11,15 +15,15 @@ export default function ProductForm() {
   const [price,setPrice] =
     useState("");
 
-  async function submit(
-    e: React.FormEvent
-  ) {
+  const [categoryId,setCategoryId] =
+    useState("");
 
-    e.preventDefault();
+  async function submit() {
 
     await fetch(
       "/api/admin/products",
       {
+
         method:"POST",
 
         headers:{
@@ -27,9 +31,13 @@ export default function ProductForm() {
           "application/json"
         },
 
-        body:JSON.stringify({
+        body: JSON.stringify({
+
           name,
-          price:Number(price)
+
+          price:Number(price),
+
+          categoryId
         })
       }
     );
@@ -37,22 +45,11 @@ export default function ProductForm() {
 
   return (
 
-    <form
-      onSubmit={submit}
-      className="space-y-4"
-    >
+    <div className="space-y-4">
 
       <input
-
         placeholder="Product Name"
-
-        className="
-        border
-        p-3
-        w-full"
-
         value={name}
-
         onChange={(e)=>
           setName(
             e.target.value
@@ -61,16 +58,8 @@ export default function ProductForm() {
       />
 
       <input
-
         placeholder="Price"
-
-        className="
-        border
-        p-3
-        w-full"
-
         value={price}
-
         onChange={(e)=>
           setPrice(
             e.target.value
@@ -78,16 +67,34 @@ export default function ProductForm() {
         }
       />
 
+      <select
+        value={categoryId}
+        onChange={(e)=>
+          setCategoryId(
+            e.target.value
+          )
+        }
+      >
+
+        {categories.map((c:any)=> (
+
+          <option
+            key={c.id}
+            value={c.id}
+          >
+            {c.name}
+          </option>
+
+        ))}
+
+      </select>
+
       <button
-        className="
-        bg-black
-        text-white
-        px-5
-        py-3"
+        onClick={submit}
       >
         Save Product
       </button>
 
-    </form>
+    </div>
   );
 }
