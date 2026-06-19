@@ -11,66 +11,104 @@ async function main() {
       12
     );
 
-  await prisma.user.upsert({
+  const admin =
+    await prisma.user.upsert({
 
-    where: {
-      email: "admin@yourstore.com"
-    },
+      where: {
+        email: "admin@yourstore.com"
+      },
 
-    update: {},
+      update: {},
 
-    create: {
+      create: {
 
-      firstName: "Store",
+        firstName: "Store",
 
-      lastName: "Admin",
+        lastName: "Admin",
 
-      email: "admin@yourstore.com",
+        email: "admin@yourstore.com",
 
-      passwordHash: password,
+        passwordHash: password,
 
-      role: "ADMIN"
-    }
+        role: "ADMIN"
+      }
+    });
+
+  const men =
+    await prisma.category.upsert({
+
+      where: {
+        slug: "men"
+      },
+
+      update: {},
+
+      create: {
+        name: "Men",
+        slug: "men"
+      }
+    });
+
+  const women =
+    await prisma.category.upsert({
+
+      where: {
+        slug: "women"
+      },
+
+      update: {},
+
+      create: {
+        name: "Women",
+        slug: "women"
+      }
+    });
+
+  await prisma.product.createMany({
+
+    data: [
+
+      {
+        name: "Premium Polo Shirt",
+        slug: "premium-polo-shirt",
+        description:
+          "Premium cotton polo shirt",
+        price: 4500,
+        inventory: 50,
+        categoryId: men.id,
+        createdById: admin.id
+      },
+
+      {
+        name: "Classic Oxford Shirt",
+        slug: "classic-oxford-shirt",
+        description:
+          "Formal Oxford shirt",
+        price: 6000,
+        inventory: 40,
+        categoryId: men.id,
+        createdById: admin.id
+      },
+
+      {
+        name: "Luxury Pret Dress",
+        slug: "luxury-pret-dress",
+        description:
+          "Luxury women's pret dress",
+        price: 12500,
+        inventory: 20,
+        categoryId: women.id,
+        createdById: admin.id
+      }
+    ],
+
+    skipDuplicates: true
   });
 
-  console.log("Admin Created");
+  console.log(
+    "Database seeded successfully"
+  );
 }
-
-const men =
-await prisma.category.create({
-
-  data: {
-
-    name:"Men",
-
-    slug:"men"
-  }
-});
-
-await prisma.product.createMany({
-
-  data:[
-
-    {
-      name:"Premium Polo Shirt",
-      slug:"premium-polo-shirt",
-      description:"Premium Cotton",
-      price:4500,
-      inventory:50,
-      categoryId:men.id
-    },
-
-    {
-      name:"Classic Oxford Shirt",
-      slug:"classic-oxford-shirt",
-      description:"Formal Wear",
-      price:6000,
-      inventory:40,
-      categoryId:men.id
-    }
-  ]
-});
-
 
 main()
   .catch(console.error)
