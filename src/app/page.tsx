@@ -1,16 +1,44 @@
-import HeroSection from "@/components/storefront/HeroSection";
-import CategoryGrid from "@/components/storefront/CategoryGrid";
-import FeaturedProducts from "@/components/storefront/FeaturedProducts";
+import { prisma } from "@/lib/prisma";
 
-export default function HomePage() {
+import HeroSection
+from "@/components/storefront/HeroSection";
+
+import FeaturedProducts
+from "@/components/storefront/FeaturedProducts";
+
+import CategoryGrid
+from "@/components/storefront/CategoryGrid";
+
+export default async function HomePage() {
+
+  const categories =
+    await prisma.category.findMany();
+
+  const featuredProducts =
+    await prisma.product.findMany({
+
+      where: {
+        featured: true
+      },
+
+      take: 8
+    });
 
   return (
+
     <>
+
       <HeroSection />
 
-      <CategoryGrid />
+      <CategoryGrid
+        categories={categories}
+      />
 
-      <FeaturedProducts />
+      <FeaturedProducts
+        products={featuredProducts}
+      />
+
     </>
+
   );
 }
