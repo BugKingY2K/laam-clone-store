@@ -1,22 +1,41 @@
-export default function ProductsPage() {
+import { prisma } from "@/lib/prisma";
+
+import ProductGrid
+from "@/components/storefront/ProductGrid";
+
+export default async function ProductsPage() {
+
+  const products =
+    await prisma.product.findMany({
+
+      where: {
+        published: true
+      },
+
+      orderBy: {
+        createdAt: "desc"
+      }
+    });
 
   return (
 
-    <div className="container-custom py-12">
+    <div className="container-custom py-10">
 
-      <h1 className="text-4xl font-bold">
+      <h1
+        className="
+        text-4xl
+        font-bold
+        mb-8"
+      >
 
-        Products
+        All Products
 
       </h1>
 
-      <p className="mt-4">
-
-        Product listing page coming
-        in Stage 3.
-      </p>
+      <ProductGrid
+        products={products}
+      />
 
     </div>
-
   );
 }
