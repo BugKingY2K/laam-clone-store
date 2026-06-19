@@ -1,9 +1,14 @@
 import { prisma }
 from "@/lib/prisma";
 
+import { requireAdmin }
+from "@/lib/auth";
+
 export async function POST(
   request: Request
 ) {
+
+  await requireAdmin();
 
   const body =
     await request.json();
@@ -11,20 +16,25 @@ export async function POST(
   const product =
     await prisma.product.create({
 
-      data: {
+      data:{
 
-        name: body.name,
+        name:
+          body.name,
 
         slug:
-          body.name
-            .toLowerCase()
-            .replaceAll(" ","-"),
+          body.slug,
 
-        description: "",
+        description:
+          body.description,
 
-        price: body.price,
+        price:
+          body.price,
 
-        categoryId: ""
+        inventory:
+          body.inventory,
+
+        categoryId:
+          body.categoryId
       }
     });
 
