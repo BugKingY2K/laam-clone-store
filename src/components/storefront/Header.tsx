@@ -1,57 +1,70 @@
-"use client";
-
 import Link from "next/link";
+
+import SearchBar
+from "./SearchBar";
 
 export default function Header() {
 
   return (
 
-    <header className="border-b">
+    <header
+      className="
+      border-b"
+    >
 
-      <div className="container-custom">
+      <div
+        className="
+        container-custom
+        h-20
+        flex
+        items-center
+        justify-between"
+      >
 
-        <div className="flex items-center justify-between h-20">
+        <Link
+          href="/"
+          className="
+          text-3xl
+          font-bold"
+        >
 
-          <Link
-            href="/"
-            className="text-3xl font-bold"
-          >
-            PoPStore
+          LAAM
+
+        </Link>
+
+        <SearchBar />
+
+        <nav
+          className="
+          flex
+          gap-6"
+        >
+
+          <Link href="/products">
+
+            Products
+
           </Link>
 
-          <nav className="hidden md:flex gap-8">
+          <Link href="/categories">
 
-            <Link href="/">
-              Home
-            </Link>
+            Categories
 
-            <Link href="/products">
-              Products
-            </Link>
+          </Link>
 
-            <Link href="/categories">
-              Categories
-            </Link>
+          <Link href="/cart">
 
-            <Link href="/account">
-              Account
-            </Link>
-            
-            <Link href="/login">
-             Login
-            </Link>
+            Cart
 
-            <Link href="/register">
-             Register
-            </Link>
+          </Link>
 
-            <Link href="/cart">
-             Cart
-            </Link>
+          <Link href="/account">
 
-          </nav>
+            Account
 
-        </div>
+          </Link>
+
+        </nav>
 
       </div>
 
