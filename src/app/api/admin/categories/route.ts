@@ -1,8 +1,14 @@
-import { prisma } from "@/lib/prisma";
+import { prisma }
+from "@/lib/prisma";
+
+import { requireAdmin }
+from "@/lib/auth";
 
 export async function POST(
   request: Request
 ) {
+
+  await requireAdmin();
 
   const body =
     await request.json();
@@ -10,14 +16,13 @@ export async function POST(
   const category =
     await prisma.category.create({
 
-      data: {
+      data:{
 
-        name: body.name,
+        name:
+          body.name,
 
         slug:
-          body.name
-            .toLowerCase()
-            .replaceAll(" ","-")
+          body.slug
       }
     });
 
