@@ -1,30 +1,55 @@
 "use client";
 
-import { useState } from "react";
+import { useRouter }
+from "next/navigation";
+
+import { useState }
+from "react";
 
 export default function SearchBar() {
 
-  const [query, setQuery] =
+  const router =
+    useRouter();
+
+  const [query,setQuery] =
     useState("");
+
+  function submit(
+    e: React.FormEvent
+  ) {
+
+    e.preventDefault();
+
+    router.push(
+      `/search?q=${query}`
+    );
+  }
 
   return (
 
-    <input
+    <form
+      onSubmit={submit}
+    >
 
-      value={query}
+      <input
 
-      onChange={(e) =>
-        setQuery(e.target.value)
-      }
+        value={query}
 
-      placeholder="Search products..."
+        onChange={(e)=>
+          setQuery(
+            e.target.value
+          )
+        }
 
-      className="
-      border
-      rounded-lg
-      px-4
-      py-2
-      w-full"
-    />
+        placeholder="Search..."
+
+        className="
+        border
+        px-4
+        py-2
+        rounded-lg"
+      />
+
+    </form>
   );
 }
