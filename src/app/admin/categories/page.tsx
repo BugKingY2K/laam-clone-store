@@ -1,37 +1,39 @@
-import Link from "next/link";
+import { prisma }
+from "@/lib/prisma";
 
-export default function CategoriesPage() {
+export default async function CategoriesPage() {
+
+  const categories =
+    await prisma.category.findMany();
 
   return (
 
     <div>
 
-      <div
+      <h1
         className="
-        flex
-        justify-between
-        mb-6"
+        text-3xl
+        font-bold
+        mb-8"
       >
+        Categories
+      </h1>
 
-        <h1
+      {categories.map(category => (
+
+        <div
+          key={category.id}
           className="
-          text-3xl
-          font-bold"
+          bg-white
+          p-4
+          mb-3"
         >
 
-          Categories
+          {category.name}
 
-        </h1>
+        </div>
 
-        <Link
-          href="/admin/categories/new"
-        >
-
-          New Category
-
-        </Link>
-
-      </div>
+      ))}
 
     </div>
   );
