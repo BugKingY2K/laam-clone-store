@@ -1,6 +1,21 @@
+import { prisma }
+from "@/lib/prisma";
+
 import Link from "next/link";
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+
+  const products =
+    await prisma.product.findMany({
+
+      include:{
+        category:true
+      },
+
+      orderBy:{
+        createdAt:"desc"
+      }
+    });
 
   return (
 
@@ -10,7 +25,7 @@ export default function ProductsPage() {
         className="
         flex
         justify-between
-        mb-6"
+        mb-8"
       >
 
         <h1
@@ -18,26 +33,18 @@ export default function ProductsPage() {
           text-3xl
           font-bold"
         >
-
           Products
-
         </h1>
 
         <Link
           href="/admin/products/new"
         >
-
-          New Product
-
+          Add Product
         </Link>
 
       </div>
 
-      <table
-        className="
-        w-full
-        border"
-      >
+      <table className="w-full">
 
         <thead>
 
@@ -45,11 +52,43 @@ export default function ProductsPage() {
 
             <th>Name</th>
 
+            <th>Category</th>
+
             <th>Price</th>
+
+            <th>Stock</th>
 
           </tr>
 
         </thead>
+
+        <tbody>
+
+          {products.map(product => (
+
+            <tr key={product.id}>
+
+              <td>
+                {product.name}
+              </td>
+
+              <td>
+                {product.category.name}
+              </td>
+
+              <td>
+                {product.price}
+              </td>
+
+              <td>
+                {product.inventory}
+              </td>
+
+            </tr>
+
+          ))}
+
+        </tbody>
 
       </table>
 
