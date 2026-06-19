@@ -1,7 +1,3 @@
-import NextAuth from "next-auth";
-import Credentials from "next-auth/providers/credentials";
-import { prisma } from "./prisma";
-import bcrypt from "bcryptjs";
 import { auth } from "@/auth";
 
 export async function getCurrentUser() {
@@ -32,31 +28,6 @@ export async function requireAdmin() {
 
   return user;
 }
-
-export const { handlers, auth, signIn, signOut } =
-  NextAuth({
-    providers: [
-      Credentials({
-        credentials: {
-          email: {},
-          password: {}
-        },
-
-        async authorize(credentials) {
-
-          if (!credentials?.email) {
-            return null;
-          }
-
-          const user =
-            await prisma.user.findUnique({
-              where: {
-                email:
-                  credentials.email as string
-              }
-            });
-
-          if (!user) {
             return null;
           }
 
@@ -81,4 +52,8 @@ export const { handlers, auth, signIn, signOut } =
         }
       })
     ]
+
+
+
+    
   });
