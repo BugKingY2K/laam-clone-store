@@ -1,53 +1,48 @@
-import DataTable
-from "@/components/admin/DataTable";
+import { prisma }
+from "@/lib/prisma";
 
-const rows = [
+export default async function InventoryPage() {
 
-  {
-    product:
-      "Premium Polo Shirt",
-
-    stock: 40
-  },
-
-  {
-    product:
-      "Leather Wallet",
-
-    stock: 22
-  }
-];
-
-export default function InventoryPage() {
+  const products =
+    await prisma.product.findMany();
 
   return (
 
-    <div>
+    <table>
 
-      <h1 className="text-3xl font-bold mb-6">
+      <thead>
 
-        Inventory
+        <tr>
 
-      </h1>
+          <th>Name</th>
 
-      <DataTable
+          <th>Inventory</th>
 
-        columns={[
+        </tr>
 
-          {
-            key:"product",
-            label:"Product"
-          },
+      </thead>
 
-          {
-            key:"stock",
-            label:"Stock"
-          }
-        ]}
+      <tbody>
 
-        rows={rows}
-      />
+        {products.map(product => (
 
-    </div>
+          <tr key={product.id}>
+
+            <td>
+              {product.name}
+            </td>
+
+            <td>
+              {product.inventory}
+            </td>
+
+          </tr>
+
+        ))}
+
+      </tbody>
+
+    </table>
+
   );
 }
