@@ -1,15 +1,21 @@
-import { prisma } from "@/lib/prisma";
+import { prisma }
+from "@/lib/prisma";
+
+import { requireAdmin }
+from "@/lib/auth";
 
 export async function POST(
   request: Request
 ) {
+
+  await requireAdmin();
 
   const body =
     await request.json();
 
   await prisma.inventoryLog.create({
 
-    data: {
+    data:{
 
       productId:
         body.productId,
@@ -24,13 +30,14 @@ export async function POST(
 
   await prisma.product.update({
 
-    where: {
-      id: body.productId
+    where:{
+      id:
+      body.productId
     },
 
-    data: {
+    data:{
 
-      inventory: {
+      inventory:{
 
         increment:
           body.quantity
@@ -39,6 +46,6 @@ export async function POST(
   });
 
   return Response.json({
-    success: true
+    success:true
   });
 }
