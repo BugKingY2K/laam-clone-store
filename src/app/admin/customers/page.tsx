@@ -1,48 +1,48 @@
-import DataTable
-from "@/components/admin/DataTable";
+import { prisma }
+from "@/lib/prisma";
 
-const customers = [
+export default async function CustomersPage() {
 
-  {
-    name:"Ali Khan",
-    email:"ali@test.com"
-  },
+  const customers =
+    await prisma.user.findMany({
 
-  {
-    name:"Sara Ahmed",
-    email:"sara@test.com"
-  }
-];
-
-export default function CustomersPage() {
+      where:{
+        role:"CUSTOMER"
+      }
+    });
 
   return (
 
     <div>
 
-      <h1 className="text-3xl font-bold mb-6">
-
+      <h1
+        className="
+        text-3xl
+        font-bold
+        mb-6"
+      >
         Customers
-
       </h1>
 
-      <DataTable
+      {customers.map(customer => (
 
-        columns={[
+        <div
+          key={customer.id}
+          className="
+          bg-white
+          p-4
+          mb-4"
+        >
 
-          {
-            key:"name",
-            label:"Name"
-          },
+          {customer.firstName}
 
-          {
-            key:"email",
-            label:"Email"
-          }
-        ]}
+          {" "}
 
-        rows={customers}
-      />
+          {customer.lastName}
+
+        </div>
+
+      ))}
 
     </div>
   );
