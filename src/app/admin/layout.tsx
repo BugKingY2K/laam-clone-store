@@ -1,40 +1,33 @@
-import AdminSidebar from "@/components/admin/AdminSidebar";
-import AdminHeader from "@/components/admin/AdminHeader";
+import { requireAdmin }
+from "@/lib/auth";
 
-import { auth } from "@/auth";
-import { redirect } from "next/navigation";
+import AdminSidebar
+from "@/components/admin/AdminSidebar";
 
-const session =
-  await auth();
+export default async function AdminLayout({
 
-if (!session) {
+  children
 
-  redirect("/login");
-}
-
-export default function AdminLayout({
-  children,
-}: {
-  children: React.ReactNode;
+}:{
+  children: React.ReactNode
 }) {
+
+  await requireAdmin();
 
   return (
 
-    <div className="min-h-screen flex">
+    <div className="flex min-h-screen">
 
       <AdminSidebar />
 
-      <div className="flex-1">
-
-        <AdminHeader />
-
-        <div className="p-6">
-
-          {children}
-
-        </div>
-
-      </div>
+      <main
+        className="
+        flex-1
+        p-8
+        bg-gray-50"
+      >
+        {children}
+      </main>
 
     </div>
   );
