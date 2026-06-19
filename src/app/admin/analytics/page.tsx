@@ -1,60 +1,52 @@
-"use client";
+import { prisma }
+from "@/lib/prisma";
 
-import {
+export default async function AnalyticsPage() {
 
-  BarChart,
+  const orders =
+    await prisma.order.count();
 
-  Bar,
+  const products =
+    await prisma.product.count();
 
-  XAxis,
-
-  YAxis
-
-} from "recharts";
-
-const data = [
-
-  {
-    month:"Jan",
-    sales:12000
-  },
-
-  {
-    month:"Feb",
-    sales:18000
-  },
-
-  {
-    month:"Mar",
-    sales:25000
-  }
-];
-
-export default function AnalyticsPage() {
+  const customers =
+    await prisma.user.count();
 
   return (
 
     <div>
 
-      <h1 className="text-3xl font-bold mb-6">
+      <h1
+        className="
+        text-3xl
+        font-bold
+        mb-8"
+      >
 
         Analytics
 
       </h1>
 
-      <BarChart
-        width={700}
-        height={300}
-        data={data}
+      <div
+        className="
+        grid
+        md:grid-cols-3
+        gap-6"
       >
 
-        <XAxis dataKey="month"/>
+        <div className="bg-white p-6">
+          Orders: {orders}
+        </div>
 
-        <YAxis/>
+        <div className="bg-white p-6">
+          Products: {products}
+        </div>
 
-        <Bar dataKey="sales"/>
+        <div className="bg-white p-6">
+          Customers: {customers}
+        </div>
 
-      </BarChart>
+      </div>
 
     </div>
   );
