@@ -1,55 +1,67 @@
-import DataTable
-from "@/components/admin/DataTable";
+import { prisma }
+from "@/lib/prisma";
 
-const orders = [
+export default async function OrdersPage() {
 
-  {
-    id:"ORD001",
-    total:"PKR 4500",
-    status:"Pending"
-  },
+  const orders =
+    await prisma.order.findMany({
 
-  {
-    id:"ORD002",
-    total:"PKR 8000",
-    status:"Shipped"
-  }
-];
+      include:{
+        customer:true
+      },
 
-export default function OrdersPage() {
+      orderBy:{
+        createdAt:"desc"
+      }
+    });
 
   return (
 
     <div>
 
-      <h1 className="text-3xl font-bold mb-6">
-
+      <h1
+        className="
+        text-3xl
+        font-bold
+        mb-6"
+      >
         Orders
-
       </h1>
 
-      <DataTable
+      {orders.map(order => (
 
-        columns={[
+        <div
+          key={order.id}
+          className="
+          bg-white
+          p-4
+          mb-4"
+        >
 
-          {
-            key:"id",
-            label:"Order"
-          },
+          <p>
 
-          {
-            key:"total",
-            label:"Total"
-          },
+            Order:
+            {order.id}
 
-          {
-            key:"status",
-            label:"Status"
-          }
-        ]}
+          </p>
 
-        rows={orders}
-      />
+          <p>
+
+            Customer:
+            {order.customer.email}
+
+          </p>
+
+          <p>
+
+            Status:
+            {order.status}
+
+          </p>
+
+        </div>
+
+      ))}
 
     </div>
   );
