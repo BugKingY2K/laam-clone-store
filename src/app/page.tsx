@@ -1,13 +1,10 @@
 import { prisma } from "@/lib/prisma";
 
-import HeroSection
-from "@/components/storefront/HeroSection";
+import HeroSection from "@/components/storefront/HeroSection";
 
-import FeaturedProducts
-from "@/components/storefront/FeaturedProducts";
+import FeaturedProducts from "@/components/storefront/FeaturedProducts";
 
-import CategoryGrid
-from "@/components/storefront/CategoryGrid";
+import CategoryGrid from "@/components/storefront/CategoryGrid";
 
 export default async function HomePage() {
 
