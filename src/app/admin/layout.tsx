@@ -1,8 +1,6 @@
-import { requireAdmin }
-from "@/lib/auth";
+import { requireAdmin } from "@/lib/auth";
 
-import AdminSidebar
-from "@/components/admin/AdminSidebar";
+import AdminSidebar from "@/components/admin/AdminSidebar";
 
 export default async function AdminLayout({
 
