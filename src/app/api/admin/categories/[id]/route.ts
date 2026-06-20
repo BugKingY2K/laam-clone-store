@@ -9,7 +9,7 @@ const CategorySchema = z.object({
 
 export async function PUT(
   request: Request,
-  { params }: any
+  { params }: { params: { id: string } }
 ) {
   try {
 
@@ -21,19 +21,16 @@ export async function PUT(
     const validated =
       CategorySchema.parse(body);
 
-    const category =
+    return Response.json(
       await prisma.category.update({
-
         where: {
           id: params.id
         },
-
         data: validated
-      });
+      })
+    );
 
-    return Response.json(category);
-
-  } catch (error) {
+  } catch {
 
     return Response.json(
       {
