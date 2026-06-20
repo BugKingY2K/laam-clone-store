@@ -1,10 +1,6 @@
-import { prisma }
-from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 
-import {
-  deductInventory
-}
-from "@/lib/inventory";
+import { deductInventory } from "@/lib/inventory";
 
 export async function POST(
   request: Request
