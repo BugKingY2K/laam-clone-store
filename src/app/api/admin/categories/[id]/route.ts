@@ -1,72 +1,47 @@
 import { prisma } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/auth";
+import { z } from "zod";
 
-type Context = {
-  params: {
-    id: string;
-  };
-};
-
-export async function GET(
-  request: Request,
-  { params }: Context
-) {
-  await requireAdmin();
-
-  const category =
-    await prisma.category.findUnique({
-      where: {
-        id: params.id
-      }
-    });
-
-  if (!category) {
-    return Response.json(
-      { error: "Category not found" },
-      { status: 404 }
-    );
-  }
-
-  return Response.json(category);
-}
+const CategorySchema = z.object({
+  name: z.string().min(2),
+  slug: z.string().min(2)
+});
 
 export async function PUT(
   request: Request,
-  { params }: Context
+  { params }: any
 ) {
-  await requireAdmin();
+  try {
 
-  const body =
-    await request.json();
+    await requireAdmin();
 
-  const category =
-    await prisma.category.update({
-      where: {
-        id: params.id
+    const body =
+      await request.json();
+
+    const validated =
+      CategorySchema.parse(body);
+
+    const category =
+      await prisma.category.update({
+
+        where: {
+          id: params.id
+        },
+
+        data: validated
+      });
+
+    return Response.json(category);
+
+  } catch (error) {
+
+    return Response.json(
+      {
+        error: "Update failed"
       },
-      data: {
-        name: body.name,
-        slug: body.slug,
-        image: body.image
+      {
+        status: 500
       }
-    });
-
-  return Response.json(category);
-}
-
-export async function DELETE(
-  request: Request,
-  { params }: Context
-) {
-  await requireAdmin();
-
-  await prisma.category.delete({
-    where: {
-      id: params.id
-    }
-  });
-
-  return Response.json({
-    success: true
-  });
+    );
+  }
 }
