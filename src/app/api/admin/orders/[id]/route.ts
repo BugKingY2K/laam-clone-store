@@ -1,5 +1,4 @@
 import { prisma } from "@/lib/prisma";
-
 import { requireAdmin } from "@/lib/auth";
 
 export async function PUT(
