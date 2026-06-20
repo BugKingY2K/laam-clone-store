@@ -1,5 +1,4 @@
-import ProductGrid
-from "./ProductGrid";
+import ProductGrid from "./ProductGrid";
 
 export default function FeaturedProducts({
 
