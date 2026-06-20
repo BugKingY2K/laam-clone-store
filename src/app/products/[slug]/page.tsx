@@ -1,7 +1,6 @@
 import { prisma } from "@/lib/prisma";
 
-import AddToCartButton
-from "@/components/storefront/AddToCartButton";
+import AddToCartButton from "@/components/storefront/AddToCartButton";
 
 type Props = {
 
