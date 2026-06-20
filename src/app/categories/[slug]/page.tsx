@@ -1,7 +1,6 @@
 import { prisma } from "@/lib/prisma";
 
-import ProductGrid
-from "@/components/storefront/ProductGrid";
+import ProductGrid from "@/components/storefront/ProductGrid";
 
 type Props = {
 
