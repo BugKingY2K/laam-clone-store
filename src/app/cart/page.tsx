@@ -1,7 +1,6 @@
 "use client";
 
-import { useCartStore }
-from "@/store/cart-store";
+import { useCartStore } from "@/store/cart-store";
 
 export default function CartPage() {
 
