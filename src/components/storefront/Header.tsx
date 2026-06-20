@@ -1,7 +1,6 @@
 import Link from "next/link";
 
-import SearchBar
-from "./SearchBar";
+import SearchBar from "./SearchBar";
 
 export default function Header() {
 
