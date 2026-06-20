@@ -111,15 +111,9 @@ model Product {
 
   updatedAt       DateTime    @updatedAt
 
-  category        Category @relation(
-    fields:[categoryId],
-    references:[id]
-  )
+  category        Category @relation(fields:[categoryId],references:[id])
 
-  creator         User? @relation(
-    fields:[createdById],
-    references:[id]
-  )
+  creator         User? @relation(fields:[createdById],references:[id])
 
   images          ProductImage[]
 
@@ -138,11 +132,7 @@ model ProductImage {
 
   sortOrder       Int         @default(0)
 
-  product Product @relation(
-    fields:[productId],
-    references:[id],
-    onDelete:Cascade
-  )
+  product Product @relation(fields:[productId], references:[id], onDelete:Cascade)
 }
 
 model ProductVariant {
@@ -161,11 +151,7 @@ model ProductVariant {
 
   price           Float
 
-  product Product @relation(
-    fields:[productId],
-    references:[id],
-    onDelete:Cascade
-  )
+  product Product @relation(fields:[productId], references:[id], onDelete:Cascade)
 }
 
 model InventoryLog {
@@ -207,11 +193,7 @@ model Address {
 
   isDefault       Boolean     @default(false)
 
-  user User @relation(
-    fields:[userId],
-    references:[id],
-    onDelete:Cascade
-  )
+  user User @relation( fields:[userId], references:[id], onDelete:Cascade)
 }
 
 model Wishlist {
@@ -224,17 +206,9 @@ model Wishlist {
 
   createdAt       DateTime    @default(now())
 
-  user User @relation(
-    fields:[userId],
-    references:[id],
-    onDelete:Cascade
-  )
+  user User @relation( fields:[userId], references:[id], onDelete:Cascade )
 
-  product Product @relation(
-    fields:[productId],
-    references:[id],
-    onDelete:Cascade
-  )
+  product Product @relation( fields:[productId], references:[id], onDelete:Cascade )
 }
 
 model Cart {
@@ -245,11 +219,7 @@ model Cart {
 
   createdAt DateTime @default(now())
 
-  user User @relation(
-    fields:[userId],
-    references:[id],
-    onDelete:Cascade
-  )
+  user User @relation( fields:[userId], references:[id], onDelete:Cascade )
 
   items CartItem[]
 }
@@ -263,11 +233,7 @@ model CartItem {
 
   quantity        Int         @default(1)
 
-  cart Cart @relation(
-    fields:[cartId],
-    references:[id],
-    onDelete:Cascade
-  )
+  cart Cart @relation( fields:[cartId], references:[id], onDelete:Cascade )
 }
 
 model Order {
@@ -284,10 +250,7 @@ model Order {
 
   updatedAt       DateTime    @updatedAt
 
-  customer User @relation(
-    fields:[userId],
-    references:[id]
-  )
+  customer User @relation( fields:[userId], references:[id] )
 
   items           OrderItem[]
 
@@ -306,11 +269,7 @@ model OrderItem {
 
   unitPrice       Float
 
-  order Order @relation(
-    fields:[orderId],
-    references:[id],
-    onDelete:Cascade
-  )
+  order Order @relation( fields:[orderId], references:[id], onDelete:Cascade )
 }
 
 model Payment {
@@ -327,11 +286,7 @@ model Payment {
 
   createdAt       DateTime       @default(now())
 
-  order Order @relation(
-    fields:[orderId],
-    references:[id],
-    onDelete:Cascade
-  )
+  order Order @relation( fields:[orderId], references:[id], onDelete:Cascade )
 }
 
 model ShippingZone {
@@ -357,8 +312,5 @@ model AuditLog {
 
   createdAt       DateTime    @default(now())
 
-  user User? @relation(
-    fields:[userId],
-    references:[id]
-  )
+  user User? @relation( fields:[userId], references:[id] )
 }
