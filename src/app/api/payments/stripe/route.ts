@@ -1,5 +1,4 @@
-import { stripe }
-from "@/lib/stripe";
+import { stripe } from "@/lib/stripe";
 
 export async function POST(
   request: Request
