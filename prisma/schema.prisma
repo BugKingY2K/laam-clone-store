@@ -60,6 +60,8 @@ model User {
   wishlists       Wishlist[]
 
   auditLogs       AuditLog[]
+
+  cart           Cart?
 }
 
 model Category {
@@ -237,15 +239,20 @@ model Wishlist {
 
 model Cart {
 
-  id              String      @id @default(cuid())
+  id        String @id @default(cuid())
 
-  userId          String      @unique
+  userId    String @unique
 
-  createdAt       DateTime    @default(now())
+  createdAt DateTime @default(now())
 
-  items           CartItem[]
+  user User @relation(
+    fields:[userId],
+    references:[id],
+    onDelete:Cascade
+  )
+
+  items CartItem[]
 }
-
 model CartItem {
 
   id              String      @id @default(cuid())
