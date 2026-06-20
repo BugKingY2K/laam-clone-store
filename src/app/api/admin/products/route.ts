@@ -1,9 +1,5 @@
-import { prisma }
-from "@/lib/prisma";
-
-import { requireAdmin }
-from "@/lib/auth";
-
+import { prisma } from "@/lib/prisma";
+import { requireAdmin } from "@/lib/auth";
 import { z } from "zod";
 
 const ProductSchema = z.object({
@@ -18,36 +14,35 @@ const ProductSchema = z.object({
 export async function POST(
   request: Request
 ) {
+  try {
 
-  await requireAdmin();
+    await requireAdmin();
 
-  const body =
-    await request.json();
+    const body =
+      await request.json();
 
-  const product =
-    await prisma.product.create({
+    const validated =
+      ProductSchema.parse(body);
 
-      data:{
+    const product =
+      await prisma.product.create({
 
-        name:
-          body.name,
+        data: validated
+      });
 
-        slug:
-          body.slug,
+    return Response.json(product);
 
-        description:
-          body.description,
+  } catch (error) {
 
-        price:
-          body.price,
+    console.error(error);
 
-        inventory:
-          body.inventory,
-
-        categoryId:
-          body.categoryId
+    return Response.json(
+      {
+        error: "Failed to create product"
+      },
+      {
+        status: 500
       }
-    });
-
-  return Response.json(product);
+    );
+  }
 }
