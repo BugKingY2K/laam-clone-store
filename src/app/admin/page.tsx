@@ -1,8 +1,6 @@
-import { prisma }
-from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 
-import AdminStats
-from "@/components/admin/AdminStats";
+import AdminStats from "@/components/admin/AdminStats";
 
 export default async function Dashboard() {
 
